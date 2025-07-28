@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Brian Libgober</title>
+    <link>https://example.com/</link>
+    <description>Recent content on Brian Libgober</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 08 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Contact</title>
+      <link>https://example.com/contact/</link>
+      <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/contact/</guid>
+      
+        <description>Contact Page</description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://example.com/collaborators/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/collaborators/</guid>
+      
+        <description>&lt;h1 id=&#34;collaborators&#34;&gt;Collaborators&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://mills.northeastern.edu/people/sahar-abi-hassan/&#34;&gt;Sahar Abi-Hassan&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.valentinbolotnyy.com/&#34;&gt;Valentin Bolotnyy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://polisci.osu.edu/people/box-steffensmeier.1&#34;&gt;Janet Box-Steffensmeier&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dcarpenter.scholar.harvard.edu/&#34;&gt;Daniel Carpenter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.law.hku.hk/academic_staff/benjamin-m-chen/&#34;&gt;Benjamin M. Chen&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dinopc.org/&#34;&gt;Dino Christenson&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dumptydg.wixsite.com/mysite&#34;&gt;Tirthankar Dasgupta&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sites.google.com/view/bcegerod/navigation&#34;&gt;Benjamin C.K. Egerod&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.mayyakomisarchik.com/&#34;&gt;Mayya Komisarchik&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://aaronrkaufman.com/&#34;&gt;Aaron Kaufman&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://christophertkenny.com/&#34;&gt;Chris Kenny&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://judgelord.github.io/&#34;&gt;Devin Judge-Lord&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://connorjerzak.com/&#34;&gt;Connor Jerzak&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.christopherli.net/&#34;&gt;Chris Li&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sites.google.com/view/npashley/&#34;&gt;Nicole E. Pashley&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wp.nyu.edu/srashin/&#34;&gt;Steven Rashin&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.mrichardson.info/&#34;&gt;Mark Richardson&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.linkedin.com/in/arunravi/&#34;&gt;Arun Ravichandran&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sebastian-thieme.com/&#34;&gt;Sebastian Thieme&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.gov.harvard.edu/directory/jacob-waggoner/&#34;&gt;Jacob Waggoner&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://lafollette.wisc.edu/people/yackee-susan-webb/&#34;&gt;Susan Webb Yackee&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://example.com/imprint/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/imprint/</guid>
+      
+        <description>&lt;p&gt;spo&lt;/p&gt;
+&lt;h1 id=&#34;legal-disclosure&#34;&gt;Legal Disclosure&lt;/h1&gt;
+&lt;p&gt;Information in accordance with the applicable law&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>
