@@ -1,0 +1,93 @@
+name: Deploy Site
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-site
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Pages repository
+        uses: actions/checkout@v4
+        with:
+          path: pages
+
+      - name: Checkout website source
+        uses: actions/checkout@v4
+        with:
+          repository: libgober/libgober.github.src
+          ref: main
+          path: site-src
+
+      - name: Checkout CV data
+        uses: actions/checkout@v4
+        with:
+          repository: libgober/cv-data
+          ref: main
+          path: cv-data
+
+      - name: Stage CV data
+        run: |
+          rm -rf site-src/cv-data
+          mkdir -p site-src/cv-data
+          cp cv-data/cv.yaml site-src/cv-data/cv.yaml
+          cp cv-data/publications.bib site-src/cv-data/publications.bib
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: site-src/requirements.txt
+
+      - name: Install Python dependencies
+        working-directory: site-src
+        run: python -m pip install -r requirements.txt
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render site
+        working-directory: site-src
+        run: quarto render
+
+      - name: Preserve Pages settings
+        run: |
+          if [ -f pages/CNAME ]; then
+            cp pages/CNAME /tmp/CNAME
+          fi
+
+      - name: Sync rendered site
+        run: |
+          rsync -a --delete \
+            --exclude .git \
+            --exclude CNAME \
+            --exclude .github \
+            site-src/_site/ pages/
+          if [ -f /tmp/CNAME ]; then
+            cp /tmp/CNAME pages/CNAME
+          else
+            echo "brianlibgober.com" > pages/CNAME
+          fi
+          touch pages/.nojekyll
+
+      - name: Commit and push Pages repository
+        working-directory: pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No site changes to deploy."
+          else
+            git commit -m "Deploy site"
+            git push
+          fi
