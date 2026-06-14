@@ -2,6 +2,14 @@ name: Deploy Site
 
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Deploy even if source inputs are unchanged"
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    - cron: "17 7 * * 1"
 
 permissions:
   contents: write
@@ -34,7 +42,31 @@ jobs:
           ref: main
           path: cv-data
 
+      - name: Check deployment inputs
+        id: deploy-inputs
+        run: |
+          site_src_sha="$(git -C site-src rev-parse HEAD)"
+          cv_data_sha="$(git -C cv-data rev-parse HEAD)"
+          state_file="pages/.deploy-state"
+
+          echo "site_src_sha=${site_src_sha}" >> "$GITHUB_OUTPUT"
+          echo "cv_data_sha=${cv_data_sha}" >> "$GITHUB_OUTPUT"
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            echo "Manual force deploy requested."
+          elif [ -f "$state_file" ] \
+            && grep -qx "site-src=${site_src_sha}" "$state_file" \
+            && grep -qx "cv-data=${cv_data_sha}" "$state_file"; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            echo "Deployment inputs unchanged."
+          else
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            echo "Deployment inputs changed or no previous state was found."
+          fi
+
       - name: Stage CV data
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         run: |
           rm -rf site-src/cv-data
           mkdir -p site-src/cv-data
@@ -42,6 +74,7 @@ jobs:
           cp cv-data/publications.bib site-src/cv-data/publications.bib
 
       - name: Set up Python
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -49,41 +82,53 @@ jobs:
           cache-dependency-path: site-src/requirements.txt
 
       - name: Install Python dependencies
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         working-directory: site-src
         run: python -m pip install -r requirements.txt
 
       - name: Set up Quarto
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         uses: quarto-dev/quarto-actions/setup@v2
         
       - name: Generate site data
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         working-directory: site-src
         run: python scripts/build_site_data.py
 
       - name: Render site
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         working-directory: site-src
         run: quarto render
 
       - name: Preserve Pages settings
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         run: |
           if [ -f pages/CNAME ]; then
             cp pages/CNAME /tmp/CNAME
           fi
 
       - name: Sync rendered site
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         run: |
           rsync -a --delete \
             --exclude .git \
             --exclude CNAME \
             --exclude .github \
+            --exclude .deploy-state \
             site-src/_site/ pages/
           if [ -f /tmp/CNAME ]; then
             cp /tmp/CNAME pages/CNAME
           else
             echo "brianlibgober.com" > pages/CNAME
           fi
+          printf "site-src=%s\ncv-data=%s\n" \
+            "${{ steps.deploy-inputs.outputs.site_src_sha }}" \
+            "${{ steps.deploy-inputs.outputs.cv_data_sha }}" \
+            > pages/.deploy-state
           touch pages/.nojekyll
 
       - name: Commit and push Pages repository
+        if: steps.deploy-inputs.outputs.deploy == 'true'
         working-directory: pages
         run: |
           git config user.name "github-actions[bot]"
